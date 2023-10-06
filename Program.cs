@@ -1,3 +1,5 @@
+using CapitalPlacementProject.Data;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CapitalPlacementProject
 {
@@ -8,11 +10,12 @@ namespace CapitalPlacementProject
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            // Inject CapitalPlacementDbContext
+            builder.Services.AddSingleton<CapitalPlacementDbContext>();
 
             var app = builder.Build();
 
@@ -24,9 +27,7 @@ namespace CapitalPlacementProject
             }
 
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
-
 
             app.MapControllers();
 
