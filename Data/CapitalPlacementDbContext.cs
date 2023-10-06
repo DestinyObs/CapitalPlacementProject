@@ -10,7 +10,7 @@ namespace CapitalPlacementProject.Data
         private readonly string _endpointUri;
         private readonly string _primaryKey;
         private readonly CosmosClient _cosmosClient;
-        private readonly string _databaseId = "CapitalPlacementDb"; // Ensure this matches your actual database name
+        private readonly string _databaseId = "CapitalPlacementDb";
 
         public CapitalPlacementDbContext(IConfiguration configuration)
         {
@@ -25,4 +25,26 @@ namespace CapitalPlacementProject.Data
         public Container WorkflowContainer => _cosmosClient.GetContainer(_databaseId, "Workflow");
         public Container PreviewContainer => _cosmosClient.GetContainer(_databaseId, "Preview");
     }
+
+    public class CosmosDbInitializer
+    {
+        private readonly CapitalPlacementDbContext _dbContext;
+
+        public CosmosDbInitializer(CapitalPlacementDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
+        public void Initialize()
+        {
+            // Ensure containers exist (will be created if not)
+            _dbContext.ProgramContainer.ReadContainerAsync().Wait();
+            _dbContext.ApplicationTemplateContainer.ReadContainerAsync().Wait();
+            _dbContext.WorkflowContainer.ReadContainerAsync().Wait();
+            _dbContext.PreviewContainer.ReadContainerAsync().Wait();
+
+            // You can add logic to seed initial data if needed
+        }
+    }
+
 }

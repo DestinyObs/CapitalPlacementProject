@@ -14,10 +14,18 @@ namespace CapitalPlacementProject
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+
             // Inject CapitalPlacementDbContext
             builder.Services.AddSingleton<CapitalPlacementDbContext>();
 
+            // Inject CosmosDbInitializer as Singleton
+            builder.Services.AddSingleton<CosmosDbInitializer>();
+
+
             var app = builder.Build();
+
+            var initializer = app.Services.GetRequiredService<CosmosDbInitializer>();
+            initializer.Initialize();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

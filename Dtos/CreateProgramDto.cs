@@ -3,12 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace CapitalPlacementProject.Models
+namespace CapitalPlacementProject.Dtos
 {
-    public class ProgramModel
+    public class CreateProgramDto
     {
-        public Guid Id { get; set; }
-
         [Required(ErrorMessage = "ProgramTitle is required")]
         public string ProgramTitle { get; set; }
 
@@ -38,9 +36,8 @@ namespace CapitalPlacementProject.Models
         [Required(ErrorMessage = "Duration is required")]
         public string Duration { get; set; }
 
-        public List<ProgramLocation> ProgramLocations { get; set; } = new List<ProgramLocation>();
+        public List<ProgramLocationDto> ProgramLocations { get; set; } = new List<ProgramLocationDto>();
 
-        [Required(ErrorMessage = "FullyRemote is required")]
         public bool FullyRemote { get; set; }
 
         [Required(ErrorMessage = "MinQualifications is required")]
@@ -50,7 +47,7 @@ namespace CapitalPlacementProject.Models
         public int MaxApplications { get; set; }
     }
 
-    public class ProgramLocation
+    public class ProgramLocationDto
     {
         [Required(ErrorMessage = "City is required")]
         public string City { get; set; }
